@@ -1,5 +1,5 @@
 #! /bin/bash
 
-export CUDA_VISIBLE_DEVICES=13
+export CUDA_VISIBLE_DEVICES=11
 
 python run_synthetic.py > out.txt

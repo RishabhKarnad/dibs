@@ -3,6 +3,8 @@ import jax.random as random
 import jax.numpy as jnp
 import numpy as np
 
+import os
+
 from dibs.target import make_linear_gaussian_equivalent_model
 from dibs.utils import visualize_ground_truth
 from dibs.inference import MarginalDiBS
@@ -12,7 +14,22 @@ key = random.PRNGKey(123)
 print(f"JAX backend: {jax.default_backend()}")
 
 
-datasets = [('3var', 3), ('4var', 4), ('7var', 7)]
+datasets = [('20var-01', 20),
+            ('20var-02', 20),
+            ('20var-03', 20),
+            ('20var-04', 20),
+            ('20var-05', 20),
+            ('5var-01', 5),
+            ('5var-02', 5),
+            ('5var-03', 5),
+            ('5var-04', 5),
+            ('5var-05', 5),
+            ('3var-v', 3),
+            ('3var-chain', 3),
+            ('3var-complete', 3),
+            ('3var-1edge', 3),
+            ('7var', 7),
+            ('sachs', 11)]
 
 
 def svgd_callback(*, dibs, t, zs):
@@ -21,6 +38,8 @@ def svgd_callback(*, dibs, t, zs):
 
 for ds in datasets:
     dataset_dir = f'../dag-gwg/datasets/{ds[0]}'
+
+    os.makedirs(f'./output/{ds[0]}', exist_ok=True)
 
     key, subk = random.split(key)
     _, graph_model, likelihood_model = make_linear_gaussian_equivalent_model(
